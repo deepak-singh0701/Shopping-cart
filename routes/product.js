@@ -56,8 +56,9 @@ router.post('/products',isLoggedIn, upload.single("productImg") ,async(req, res)
 // Show particular product
 router.get('/products/:id', async(req, res) => {
     try {
+        const user = req.user._id;
         const product=await Product.findById(req.params.id).populate('reviews');
-        res.render('products/show', { product});
+        res.render('products/show', { product , user});
     }
     catch (e) {
         console.log(e.message);
@@ -93,7 +94,8 @@ router.patch('/products/:id',isLoggedIn,upload.single("productImg"),async(req, r
             img: result.secure_url,
             price:req.body.productPrice,
             desc:req.body.productDesc,
-            cloudinary_id:result.public_id
+            cloudinary_id:result.public_id,
+            seller_id:req.user._id
         }
         await Product.findByIdAndUpdate(id,updatedProduct);
         req.flash('success', 'Updated Successfully!');
