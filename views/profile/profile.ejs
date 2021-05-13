@@ -1,0 +1,17 @@
+<%- include("../partials/header") %> 
+<%- include("../partials/navbar") %>
+
+<h2 class="text-capitalize text-center username">Hey <%= user.username %> !</h2>
+
+<img class="img-thumbnail mx-auto d-block" src="<%= user.profilepic %> " alt=""> <br>
+
+<div class=" container text-center info">
+    <a class="updatebtn btn btn-primary mb-3" href="/profile/update/propic">Update Profile Picture</a>
+
+    <h4 class="mb-5"><%= user.email %> </h4>
+    
+</div>
+<% if(!user.is_merchant){ %> 
+<a href="/register/merchant">Sell On E-Commerce</a>
+<% } %> 
+<%- include("../partials/footer") %> 

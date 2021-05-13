@@ -1,0 +1,14 @@
+<%- include("../partials/header")  %>
+<%- include("../partials/navbar")  %>
+
+<br>
+<br>
+<br>
+<form action="/profile/<%= user._id %> " method="POST" enctype="multipart/form-data">
+    <label>Upload Your Picture</label>
+    <input type="file" name="propic">
+    <button type="submit">Upload</button>
+</form>
+
+
+<%- include("../partials/footer")  %>

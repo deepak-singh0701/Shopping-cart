@@ -1,0 +1,14 @@
+<%- include ("../partials/header"); %>
+<%- include ("../partials/navbar"); %>  <br><br><br>
+
+<form action="/register/merchant" method="POST">
+    <label >Your name:</label>
+    <input type="text" name="name" required>
+    <label>Organisation Name:</label>
+    <input type="text" name="org" id="org" required>
+    <input type="checkbox" name="merchant" required><p>I hereby confirm that all the provided credentils are true by my knowledge and i accept the terms and conditions</p>
+    <button type="submit">Register As Merchant</button>
+</form>
+
+
+<%- include("../partials/footer")  %> 

@@ -1,0 +1,13 @@
+------------TO DO------------
+
+- Integrate Payment Gateway using PayU -(https://medium.com/@mayankgupta1338/node-js-express-js-payumoney-payment-integration-32d3058c714)
+- Add the User profile feature -(past orders etc.)---------HALF DONE----------
++ Upload Image using multer to cloudinary. -----------DONE----------
++ Email Verification------------DONE------------
+- Different Accounts for merchant and customers
+- Deleting Reviews and Products only After Authentication 
+
+
+-----------MAYBE-------------
+- Google,Facebook Login
+- Add Icon to the tab
