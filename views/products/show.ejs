@@ -8,14 +8,14 @@
   <%- include("../partials/flash")%>
 
   
-    <div class="row" style="display: inline-block;">
+    <div class="row">
         <div class="col-lg-6 mt-3 mb-3">
             <div class="card">
                 <img src="<%=product.img%>" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title"><%=product.name%></h5>
                   <h5 class="card-title">&#8377; <%=product.price%></h5>
-                  <p class="card-text"><%=product.desc%></p>
+                  <p class="card-text"><%=product.desc%> </p>
                   <a href="#" class="btn btn-success">Buy</a>
                   <% if (user==product.seller_id || product.seller_id===null) {%> 
                   <a href="/products/<%=product._id%>/edit" class="btn btn-warning">Edit</a>
@@ -36,7 +36,7 @@
                 </div>
               </div>
         </div>
-        <div class="col-lg-6" style="display:inline-block">
+        <div class="col-lg-6">
             <h6 class="display-6">Leave a Review</h6>
             <form  class="validated-form" action="/products/<%=product._id%>/review" method="POST" style="max-width:70%;" novalidate>
                 <!-- <div class="mb-3">
