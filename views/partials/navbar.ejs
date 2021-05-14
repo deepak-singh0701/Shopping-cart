@@ -14,11 +14,13 @@
           </li>
         </ul>
         <div class="navbar-nav ml-auto">
+          <% if(currentUser){ %> 
           <% if(currentUser.is_merchant===true){%> 
             <li class="nav-item">
-              <a class="nav-link active" href="/products/new" tabindex="-1" aria-disabled="true">New</a>
+              <a class="nav-link active" href="/products/new" tabindex="-1" aria-disabled="true">+Add Product</a>
             </li>
-            <% } %> 
+            <% } %>
+            <% } %>  
             <%if(!currentUser){%>
               <a href="/login" class="nav-link active">Login</a>
             

@@ -22,6 +22,7 @@ const authRoutes = require('./routes/auth');
 const cartRoutes = require('./routes/cart');
 const profileRoutes = require('./routes/profile');
 const merchantRoutes = require('./routes/marchant');
+const paymentRoutes = require('./routes/payment');
 
 mongoose.connect(process.env.DB_URL,
     {
@@ -84,6 +85,7 @@ app.get('/', (req, res) => {
 app.use(productRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
+app.use(paymentRoutes);
 app.use(profileRoutes);
 app.use(merchantRoutes);
 app.use('/products', require('./routes/product'))

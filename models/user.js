@@ -35,7 +35,13 @@ const userSchema = new mongoose.Schema({
     is_merchant:{
         type:Boolean,
         default:false
-    }
+    },
+    orders: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'Order'
+        }
+    ]
 
 })
 

@@ -4,11 +4,17 @@
 <br>
 <br>
 <br>
-<form action="/profile/<%= user._id %> " method="POST" enctype="multipart/form-data">
-    <label>Upload Your Picture</label>
-    <input type="file" name="propic">
-    <button type="submit">Upload</button>
-</form>
+<div class="container" style="max-width:300px;min-height: 83vh; ">
+    <form action="/profile/<%= user._id %> " method="POST" enctype="multipart/form-data" novalidate>
+        <label class="form-label mb-3">Upload Your Photo:</label>
+        <input class="form-control mb-3" style="max-width: 300px;" type="file" name="propic" required>
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+        <button class="btn btn-success mb-3" type="submit">Upload</button>
+    </form>
+    
+</div>
 
 
 <%- include("../partials/footer")  %>
