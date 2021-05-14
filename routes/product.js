@@ -47,7 +47,7 @@ router.post('/products',isLoggedIn, upload.single("productImg") ,async(req, res)
     }
     catch (e) {
         console.log(e.message);
-        req.flash('error', 'Cannot Create Products,Something is Wrong');
+        req.flash('error', `Cannot Create Products,Something is Wrong ${e}`);
         res.render('error');
     } 
 });
