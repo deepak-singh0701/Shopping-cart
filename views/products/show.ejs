@@ -8,7 +8,7 @@
   <%- include("../partials/flash")%>
 
   
-    <div class="row">
+    <div class="row" style="display: inline-block;">
         <div class="col-lg-6 mt-3 mb-3">
             <div class="card">
                 <img src="<%=product.img%>" class="card-img-top" alt="...">
@@ -36,8 +36,7 @@
                 </div>
               </div>
         </div>
-        <div class="col-lg-6" >
-           
+        <div class="col-lg-6" style="display:inline-block">
             <h6 class="display-6">Leave a Review</h6>
             <form  class="validated-form" action="/products/<%=product._id%>/review" method="POST" style="max-width:70%;" novalidate>
                 <!-- <div class="mb-3">
@@ -70,7 +69,6 @@
                
                 <button type="submit" class="btn btn-success">Submit</button>
               </form>
-            
               <div class="mb-3 mt-3">
                 <%for(let review of product.reviews){%>
 
