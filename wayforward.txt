@@ -6,7 +6,7 @@
 + Email Verification------------DONE------------
 - Different Accounts for merchant and customers---------DONE------------
 - Deleting Reviews and Products only After Authentication----------HALF DONE------------
-
+- add address before paying money
 
 -----------MAYBE-------------
 - Google,Facebook Login

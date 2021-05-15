@@ -15,7 +15,7 @@ router.get('/products', async(req, res) => {
         const products=await Product.find({});
         res.render('products/index',{products}); 
     } catch (e) {
-        console.log("Something Went Wrong");
+        console.log(e);
         req.flash('error', 'Cannot Find Products');
         res.render('error');
     }
@@ -55,13 +55,20 @@ router.post('/products',isLoggedIn, upload.single("productImg") ,async(req, res)
 
 // Show particular product
 router.get('/products/:id', async(req, res) => {
+    const product=await Product.findById(req.params.id).populate('reviews');
     try {
-        const user = req.user._id;
-        const product=await Product.findById(req.params.id).populate('reviews');
-        res.render('products/show', { product , user});
+        if(req.user==undefined || req.user==null){
+            const user = null;
+            const product=await Product.findById(req.params.id).populate('reviews');
+            res.render('products/show', { product , user});
+        }
+        else{
+            const user = req.user._id;
+            res.render('products/show', { product , user});
+        }
     }
     catch (e) {
-        console.log(e.message);
+        console.log(e);
         req.flash('error', 'Cannot find this Product');
         res.redirect('/error');
     }

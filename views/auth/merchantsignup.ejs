@@ -1,14 +1,19 @@
 <%- include ("../partials/header"); %>
 <%- include ("../partials/navbar"); %>  <br><br><br>
 
-<form action="/register/merchant" method="POST">
-    <label >Your name:</label>
-    <input type="text" name="name" required>
-    <label>Organisation Name:</label>
-    <input type="text" name="org" id="org" required>
-    <input type="checkbox" name="merchant" required><p>I hereby confirm that all the provided credentils are true by my knowledge and i accept the terms and conditions</p>
-    <button type="submit">Register As Merchant</button>
-</form>
+<div class="container" style="max-width: 500px; min-height: 83vh;">
+    <form action="/register/merchant" method="POST" novalidate>
+        <label class="form-label">Your name:</label>
+        <input class="form-control mb-2"type="text" name="name" required>
+        <label class="form-label">Organisation Name:</label>
+        <input class="form-control mb-2" type="text" name="org" id="org" required>
+        <div class="form-check form-switch mb-2 ">
+            <input class="form-check-input" type="checkbox" name="merchant" required>
+            <label class="form-check-label" for="flexSwitchCheckDefault">I hereby confirm that all the provided credentils are true by my knowledge and i accept the terms and conditions</label>
+        </div>
+        <button class="btn btn-success" style="float: right;" type="submit">Register As Merchant</button>
+    </form>    
+</div>
 
 
 <%- include("../partials/footer")  %> 
