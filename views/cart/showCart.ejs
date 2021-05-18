@@ -49,16 +49,10 @@
 
         <div class="mt-2">
           <p class="fw-bold">Total Amount :  &#8377; <%=totalAmount%></p>
-          
-          <form action="/payment_gateway/payumoney" method="POST">
-            <input class="amount" type="hidden" name="amount" value="<%=totalAmount%>"/>
-            <input class="con" type="hidden" name="phone" value="9999999999" />
-            <input type="hidden" name="service_provider" 
-             value="payu_paisa"/>
-            <input type="hidden" class="product" name="productinfo" 
-             value="educational purpose"/>
-             
-             <button class="btn btn-success">Proceed</button>
+        
+          <form action="/payment/address" method="POST">
+            <input type="hidden" name="totalAmount" value="<%=totalAmount%>">
+            <button class="btn btn-success">Proceed</button>
           </form>
         
         

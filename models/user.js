@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 const Product = require('./product');
+const Order = require ('./order');
+const addressSchema = require ('./address');
 
 
 const userSchema = new mongoose.Schema({
@@ -23,9 +25,6 @@ const userSchema = new mongoose.Schema({
             ref:'Product'
         }
     ],
-    address:{
-        type:String
-    },
     email_token:String,
     is_verified:{
         type:Boolean,
@@ -41,8 +40,10 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref:'Order'
         }
-    ]
-
+    ],
+    address:{
+        type:addressSchema
+    }
 })
 
 userSchema.plugin(passportLocalMongoose);

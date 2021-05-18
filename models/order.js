@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Product = require('./product');
+const addressSchema = require ('./address');
 
 const orderSchema = new mongoose.Schema({
     txnid: {
@@ -20,7 +21,11 @@ const orderSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref:'Product',
         }
-    ]
+    ],
+    address:{
+        type:addressSchema,
+        required :true 
+    }
 })
 
 const Order = mongoose.model('Order', orderSchema);

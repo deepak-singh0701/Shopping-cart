@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %> <br><br><br>
+
+<div class=" container" style="max-width: 500px;min-height: 83vh;">
+    <div>
+        <h2 class="display-4 mb-4">Delivery Address</h2>
+        <p>Full Name : <%=address.name%></p>
+        <p>Phone No. : <%=address.phone %> </p>
+        <p>Address : <%= address.hno%> , <%= address.colony%> <% if (address.landmark!=="") {%> , <%= address.landmark%> <% }%></p>
+        <p><%= address.city%> , <%= address.state%> - <%= address.pincode%></p>
+        <p>INDIA</p>
+    </div>
+    <div class="mb-5">
+        <h4>Total Amount :₹ <%=totalAmount %> </h4>
+    </div>
+
+    <form action="/payment_gateway/payumoney" method="POST">
+        <input class="amount" type="hidden" name="amount" value="<%=totalAmount%>" />
+        <input class="con" type="hidden" name="phone" value="9999999999" />
+        <input type="hidden" name="service_provider" value="payu_paisa" />
+        <input type="hidden" class="product" name="productinfo" value="educational purpose" />
+        <button class="btn btn-success">Proceed To Pay</button>
+    </form>
+
+
+</div>
+
+
+
+<%- include('../partials/footer') %>
