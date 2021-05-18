@@ -26,7 +26,7 @@ async function sendMail(mailOptions){
       service: 'gmail',
       auth:{
         type:'OAuth2',
-        user:"deepak0709singh@gmail.com",
+        user:"deepak0701singh@gmail.com",
         clientId:CLIENT_ID,
         clientSecret:CLIENT_SECRET,
         refreshToken:REFRESH_TOKEN,
@@ -84,9 +84,7 @@ router.post("/register", async (req, res) => {
         };
 
         try{
-          console.log("trying to send Message");
-          console.log(req.headers.host);
-          await sendMail(mailOptions).then(result => console.log("Email Sent!" , result))
+          await sendMail(mailOptions).then((result) => {console.log("Email Sent!" , result)})
           .catch(error=>console.log(error))
             req.flash("success" , `Please verify your email , a mail with confirmation link has been send to the registered email address` );
             res.redirect("/login");
