@@ -1,22 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const request = require("request");
-const jsSHA = require("jssha");
-const uniqid = require("uniqid");
 const { isLoggedIn } = require("../middleware");
 const User = require("../models/user");
 const Order = require("../models/order");
 const Address = require("../models/address");
+const Razorpay = require("razorpay");
+require("dotenv").config();
+const crypto = require("crypto");
+const Product = require("../models/product");
+
+let instance = new Razorpay({
+  key_id: process.env.key_id,
+  key_secret: process.env.key_secret,
+});
 
 router.post("/payment/address", isLoggedIn, (req, res) => {
   res.render("address/address", { totalAmount: req.body.totalAmount });
 });
 
 router.post("/payment/savedaddress", isLoggedIn, async (req, res) => {
-
   try {
-      const user = req.user;
-      const addressdata = {
+    const user = req.user;
+    const addressdata = {
       name: req.body.name,
       phone: req.body.phone,
       pincode: req.body.pincode,
@@ -26,94 +32,64 @@ router.post("/payment/savedaddress", isLoggedIn, async (req, res) => {
       colony: req.body.colony,
       landmark: req.body.landmark,
     };
-    
-    const totalAmount = req.body.totalAmount;
 
-    await User.findByIdAndUpdate(user._id , {address:addressdata});
-    req.flash('success' , 'Address Added Succesfully!');
-    res.render("address/showaddress", {address: addressdata , totalAmount: totalAmount});
-
-  }
-
-  catch (e) {
+    const totalAmount = parseInt(req.body.totalAmount);
+    await User.findByIdAndUpdate(user._id, { address: addressdata });
+    req.flash("success", "Address Added Succesfully!");
+    res.render("address/showaddress", { address: addressdata, totalAmount });
+  } catch (e) {
     console.log(e);
     req.flash(
       "error",
-      "There Was An Error In Saving Your Address , Please try Again in Some Time."
+      "There was an error in saving your address , Please try again after sometime!."
     );
     res.redirect(`/user/${req.user._id}/cart`);
   }
 });
 
-router.post("/payment_gateway/payumoney", isLoggedIn, (req, res) => {
-  req.body.txnid = uniqid.process();
-  req.body.email = req.user.email;
-  req.body.firstname = req.user.username;
-  //Here save all the details in pay object
-  const pay = req.body;
-  const hashString =
-    process.env.MERCHANT_KEY + //store in in different file
-    "|" +
-    pay.txnid +
-    "|" +
-    pay.amount +
-    "|" +
-    pay.productinfo +
-    "|" +
-    pay.firstname +
-    "|" +
-    pay.email +
-    "|" +
-    "||||||||||" +
-    process.env.MERCHANT_SALT; //store in in different file
-
-  const sha = new jsSHA("SHA-512", "TEXT");
-  sha.update(hashString);
-  //Getting hashed value from sha module
-  const hash = sha.getHash("HEX");
-
-  //We have to additionally pass merchant key to API
-
-  pay.key = process.env.MERCHANT_KEY; //store in in different file;
-  pay.surl = "http://localhost:3000/payment/success";
-  pay.furl = "http://localhost:3000/payment/fail";
-  pay.hash = hash;
-  //Making an HTTP/HTTPS call with request
-  request.post(
-    {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      url: "https://sandboxsecure.payu.in/_payment", //Testing url
-      form: pay,
-    },
-    function (error, httpRes, body) {
-      if (error)
-        res.send({
-          status: false,
-          message: error.toString(),
-        });
-      if (httpRes.statusCode === 200) {
-        res.send(body);
-      } else if (httpRes.statusCode >= 300 && httpRes.statusCode <= 400) {
-        res.redirect(httpRes.headers.location.toString());
-      }
+router.post("/payment_gateway/order", isLoggedIn, async (req, res) => {
+  try{
+    const totalAmount = req.body.totalAmount + "00";
+  var options = {
+    amount: totalAmount,
+    currency: "INR",
+  };
+  instance.orders.create(options, function (err, order) {
+    if (err) {
+      console.log(err);
+    } else {
+      const orderId = order.id;
+      res.render("payment/payment", { totalAmount, orderId });
     }
-  );
-});
+  });}
+  catch(e){
+    req.flash('error' , 'There was an error in payment , Please try again!');
+    res.redirect("/products");    
+  }
+});  
 
 router.post("/payment/success", isLoggedIn, async (req, res) => {
-  //Payumoney will send Success Transaction data to req body.
-  //  Based on the response Implement UI as per you want
+  const hmac = crypto.createHmac("sha256", process.env.key_secret);
+  hmac.update(req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id);
+  let generated_signature = hmac.digest("hex");
+  if (generated_signature == req.body.razorpay_signature) {
+  }else{
+    req.flash("Your Payment is Not Verified Please Try Again!")
+    res.redirect("/products");
+  }
   const user = req.user;
   try {
+    var totalAmount = parseInt(req.body.amount);
+    totalAmount= totalAmount/100;
     const order = {
-      txnid: req.body.txnid,
-      amount: req.body.amount,
-      orderedProducts:user.cart,
-      address:user.address
-      };
+      buyerid:req.user._id,
+      payid: req.body.razorpay_payment_id,
+      orderid:req.body.razorpay_order_id,
+      signature:req.body.razorpay_signature,
+      amount: totalAmount,
+      orderedProducts: user.cart,
+      address: user.address,
+    };
 
     const placedOrder = await Order.create(order);
 
@@ -125,7 +101,8 @@ router.post("/payment/success", isLoggedIn, async (req, res) => {
       "success",
       "Your Order has been Successfully Placed.Thanks for Shopping with us!"
     );
-    res.redirect(`/user/${req.user._id}/me`);
+    req.user.cart='';
+    res.redirect(`/user/${req.user._id}/myOrders`);
   } catch (e) {
     console.log(e.message);
     req.flash(
@@ -137,8 +114,6 @@ router.post("/payment/success", isLoggedIn, async (req, res) => {
 });
 
 router.post("/payment/fail", isLoggedIn, (req, res) => {
-  //Payumoney will send Fail Transaction data to req body.
-  //  Based on the response Implement UI as per you want
   req.flash(
     "error",
     `Your Payment Failed.Try again after sometime ${req.body}`

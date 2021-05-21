@@ -1,6 +1,5 @@
 ------------TO DO------------
-
-- Integrate Payment Gateway using PayU -(https://medium.com/@mayankgupta1338/node-js-express-js-payumoney-payment-integration-32d3058c714)-------------DONE------------
+- RAZORPAY payment gateway
 - Add the User profile feature -(past orders etc.)--------- DONE----------
 + Upload Image using multer to cloudinary. -----------DONE----------
 + Email Verification------------DONE------------
@@ -10,4 +9,5 @@
 
 -----------MAYBE-------------
 - Google,Facebook Login
+-Integrate Payment Gateway using PayU -(https://medium.com/@mayankgupta1338/node-js-express-js-payumoney-payment-integration-32d3058c714)
 - Add Icon to the tab

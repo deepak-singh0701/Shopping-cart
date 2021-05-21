@@ -1,48 +1,25 @@
 <%- include("../partials/header")%>
-<%- include("../partials/navbar")%>
+<%- include("../partials/navbar")%> <br><br><br>
+<div class="container" style="max-width:20px;min-height:83vh;">
 
+  <form action="/payment/success" method="POST">
+    <input type="hidden" name="orderId" value="<%=orderId %>">
+    <input type="hidden" name="amount" value="<%=totalAmount%>">
+    <script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        data-key="rzp_test_0Tt00UO7H23d0g" 
+        data-amount="<%=totalAmount%>"
+        data-currency="INR"
+        data-order_id="<%=orderId%>"
+        data-buttontext="Pay"
+        data-name="E-Commerce"
+        data-description="E-comProduct"
+        data-image="https://jootoor.com/wp-content/uploads/2019/03/Logo-Design.jpg"
+        data-theme.color="#ff4530"
+    ></script>
+    </form>
+  
 
-
-<div class="container" style="margin-top:5rem;width:80vw;margin-bottom: 11rem;">
-
-            <form class="validated-form" action="#" method="POST" style="max-width:70%;margin:10px auto" novalidate>
-                <h6 class="display-6">Add Your Payment Info</h6>
-                <div class="mb-3">
-                  <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Product Name"  required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="card" class="form-label">Card number</label>
-                  <input type="number" class="form-control" id="card" placeholder="Enter your 12 digit card number" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                </div>
-                <div class="mb-3">
-                    <label for="date" class="form-label">Expiry Date</label>
-                    <input type="date" class="form-control" id="card" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-               
-        
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" cols="30" rows="2" required></textarea>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-               
-                <button type="submit" class="btn btn-success">Proceed</button>
-              </form>
-        
-   
 </div>
-
 
 <%- include("../partials/footer")%>

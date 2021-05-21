@@ -3,10 +3,24 @@ const Product = require('./product');
 const addressSchema = require ('./address');
 
 const orderSchema = new mongoose.Schema({
-    txnid: {
+    buyerid:{
+        type:String,
+        require:true
+    },
+    payid: {
         type: String,
         required: true,
         unique:true
+    },
+    orderid:{
+        type:String,
+        required:true,
+        uniquie:true
+    },
+    signature:{
+        type:String,
+        require:true,
+        uniquie:true
     },
     amount: {
         type: String,

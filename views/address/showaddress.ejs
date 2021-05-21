@@ -14,11 +14,8 @@
         <h4>Total Amount :₹ <%=totalAmount %> </h4>
     </div>
 
-    <form action="/payment_gateway/payumoney" method="POST">
-        <input class="amount" type="hidden" name="amount" value="<%=totalAmount%>" />
-        <input class="con" type="hidden" name="phone" value="9999999999" />
-        <input type="hidden" name="service_provider" value="payu_paisa" />
-        <input type="hidden" class="product" name="productinfo" value="educational purpose" />
+    <form action="/payment_gateway/order" method="POST">
+        <input class="amount" type="hidden" name="totalAmount" value="<%=totalAmount%>" />
         <button class="btn btn-success">Proceed To Pay</button>
     </form>
 

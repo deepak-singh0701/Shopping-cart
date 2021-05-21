@@ -5,6 +5,9 @@ const { isLoggedIn } = require("../middleware");
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
 const path = require("path");
+const { findById } = require("../models/user");
+const Product = require("../models/product");
+const Order = require('../models/order');
 
 router.get("/profile/:userId", isLoggedIn, (req, res) => {
   const user = req.user;
@@ -13,20 +16,14 @@ router.get("/profile/:userId", isLoggedIn, (req, res) => {
 
 router.get("/user/:userID/myOrders", isLoggedIn, async(req, res) => {
   try {
-    const userInfo = await User.findById(req.params.userID).populate({
-      path: "orders",
-      populate: {
-        path: "orderedProducts",
-        model: "Product",
-      },
-    });
-    if(userInfo.orderedProducts==null){
-      const user = req.user;
+    const user=await User.findById(req.params.userID).populate('orders');
+    const orders = await Order.find({buyerid: req.user._id}).populate('orderedProducts');    
+    if(orders==null){
       req.flash("error", "You Have No Orders! , Please Order Something To View It In Your Order List.");
       res.redirect("/products");
     }
     else{
-    res.render("profile/myorders", { orders: userInfo.orderedProducts });
+    res.render("profile/myorders", { orders: orders });
     }
   } catch (e) {
     console.log(e.message);

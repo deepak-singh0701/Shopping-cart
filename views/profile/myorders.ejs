@@ -13,14 +13,11 @@
       <div class="card" style="width: 80%;margin: 10px auto;">
         <h5 class="card-header">
           <p>Total : &#8377 <%=order.amount%></p>
-          <p class="fw-light fs-6">Transaction Id : <%=order.txnid%> </p>
+          <p class="fw-light fs-6">Transaction Id : <%=order.payid%> </p>
           <p class="fw-light fs-6">Order Date : <%=order.date.toDateString()%> </p>
         </h5>
         <div class="card-body">
           <%for(let item of order.orderedProducts){%>
-          <!-- <div class="mb-2">
-                                    <img style="width: 150px;" src="<%=item.img%>" class="card-img-top" alt="...">
-                                </div>   -->
           <div class="card mb-3" style="max-width: 540px;width: 90%;">
             <div class="row g-0">
               <div class="col-md-4">
@@ -29,6 +26,7 @@
               <div class="col-md-8">
                 <div class="card-body">
                   <h6 class="card-title"><%=item.name%></h6>
+                  <p class="card-text">₹<%=item.price %> </p>
                   <a href="/products/<%=item._id%>" class="btn btn-info btn-sm">Buy it again</a>
                 </div>
               </div>
