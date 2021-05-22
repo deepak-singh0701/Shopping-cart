@@ -15,8 +15,19 @@ let instance = new Razorpay({
   key_secret: process.env.key_secret,
 });
 
-router.post("/payment/address", isLoggedIn, (req, res) => {
+router.post("/payment/address", isLoggedIn, async(req, res) => {
+  if(req.user.address==null)
   res.render("address/address", { totalAmount: req.body.totalAmount });
+  else{
+    const user =await User.findById(req.user._id);
+    const address = user.address;
+    res.render("address/showaddress" , {address});
+  }
+});
+
+router.post("/payment/address/change" , isLoggedIn , (req,res)=>{
+  const totalAmount= req.body.totalAmount;
+  res.render("address/address", {totalAmount});
 });
 
 router.post("/payment/savedaddress", isLoggedIn, async (req, res) => {

@@ -9,7 +9,13 @@ router.get('/user/:userId/cart',isLoggedIn,async (req, res) => {
     
     try {
         const user = await User.findById(req.params.userId).populate('cart');
+        if(user.cart.length==0){
+            req.flash('error' , "You have nothing in your cart!");
+            res.redirect("/products")
+        }       
+        else
         res.render('cart/showCart', { userCart: user.cart });
+
     }
     catch (e) {
         req.flash('error', 'Unable to Add this product');
@@ -19,7 +25,7 @@ router.get('/user/:userId/cart',isLoggedIn,async (req, res) => {
 
 
 
-router.post('/user/:id/cart', isLoggedIn, async (req, res) => {
+router.post('/user/:id/cart/:type', isLoggedIn, async (req, res) => {
   
     try {
         const product = await Product.findById(req.params.id);
@@ -30,11 +36,15 @@ router.post('/user/:id/cart', isLoggedIn, async (req, res) => {
 
         await user.save();
         req.flash('success', 'Added to cart successfully')
+        if(req.params.type!=="cart")
         res.redirect(`/user/${req.user._id}/cart`);
+        else
+        res.redirect(`/products/${product._id}`);
     }
     catch (e) {
         req.flash('error', 'Unable to get the cart at this moment');
         res.render('error');
+        console.log(e);
     }
 });
 
@@ -45,8 +55,5 @@ router.delete('/user/:userid/cart/:id', async(req, res) => {
     res.redirect(`/user/${req.user._id}/cart`);
 })
 
-router.get('/cart/payment', (req, res) => {
-    res.render('payment/payment')
-})
 
 module.exports = router;

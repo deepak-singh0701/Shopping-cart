@@ -16,13 +16,17 @@
                   <h5 class="card-title"><%=product.name%></h5>
                   <h5 class="card-title">&#8377; <%=product.price%></h5>
                   <p class="card-text"><%=product.desc%> </p>
-                  <a href="/user/<%=user._id%>/cart" class="btn btn-success">Buy</a>
+                  <div class="mb-3 mt-3">
+                    <form action="/user/<%=product._id%>/cart/buy" method="POST">
+                      <button class="btn btn-success">Buy</button>
+                    </form>
+                  </div>
                   <% if (user!==null){ %> 
                   <% if (user==product.seller_id || product.seller_id===null) {%> 
                   <a href="/products/<%=product._id%>/edit" class="btn btn-warning">Edit</a>
                   <% } %> <% } %> 
                   <div class="mb-3 mt-3">
-                    <form action="/user/<%=product._id%>/cart" method="POST">
+                    <form action="/user/<%=product._id%>/cart/cart" method="POST">
                       <button class="btn btn-secondary">Add To Cart</button>
                     </form>
                   </div>

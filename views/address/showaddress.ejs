@@ -6,15 +6,21 @@
         <h2 class="display-4 mb-4">Delivery Address</h2>
         <p>Full Name : <%=address.name%></p>
         <p>Phone No. : <%=address.phone %> </p>
-        <p>Address : <%= address.hno%> , <%= address.colony%> <% if (address.landmark!=="") {%> , <%= address.landmark%> <% }%></p>
+        <p>Address : <%= address.hno%> , <%= address.colony%> <% if (address.landmark!=="") {%> , <%= address.landmark%>
+            <% }%></p>
         <p><%= address.city%> , <%= address.state%> - <%= address.pincode%></p>
         <p>INDIA</p>
     </div>
     <div class="mb-5">
         <h4>Total Amount :₹ <%=totalAmount %> </h4>
     </div>
-
-    <form action="/payment_gateway/order" method="POST">
+    <div class="text-center mb-3">
+        <form action="/payment/address/change" method="POST">
+            <input class="amount" type="hidden" name="totalAmount" value="<%=totalAmount%>" />
+            <button type="submit" class="btn btn-warning">Change address</button>
+        </form>
+    </div>
+    <form class="text-center" action="/payment_gateway/order" method="POST">
         <input class="amount" type="hidden" name="totalAmount" value="<%=totalAmount%>" />
         <button class="btn btn-success">Proceed To Pay</button>
     </form>
