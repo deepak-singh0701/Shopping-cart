@@ -10,7 +10,6 @@ const orderSchema = new mongoose.Schema({
     payid: {
         type: String,
         required: true,
-        unique:true
     },
     orderid:{
         type:String,
