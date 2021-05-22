@@ -2,24 +2,25 @@
 <%- include("../partials/navbar")%> 
 <div class="container" style="max-width:260px;min-height:100vh;">
   <br><br><br><br><br><br><br><br><br>
-  <form action="/payment/success" method="POST">
-    <input type="hidden" name="orderId" value="<%=orderId %>">
-    <input type="hidden" name="amount" value="<%=totalAmount%>">
-    <button class="btn btn-primary">
-      <script
-      src="https://checkout.razorpay.com/v1/checkout.js"
-      data-key="rzp_test_0Tt00UO7H23d0g" 
-      data-amount="<%=totalAmount%>"
-      data-currency="INR"
-      data-order_id="<%=orderId%>"
-      data-buttontext="Click here To Pay ₹<%=totalAmount%>"
-      data-name="E-Commerce"
-      data-description="E-comProduct"
-      data-image="https://jootoor.com/wp-content/uploads/2019/03/Logo-Design.jpg"
-      data-theme.color="#ff4530"
-      ></script>  
-    </button>
-    </form>
+  <button class="btn btn-primary">
+    <form action="/payment/success" method="POST">
+      <input type="hidden" name="orderId" value="<%=orderId %>">
+      <input type="hidden" name="amount" value="<%=totalAmount%>">
+        <script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        data-key="rzp_test_0Tt00UO7H23d0g" 
+        data-amount="<%=totalAmount%>"
+        data-currency="INR"
+        data-order_id="<%=orderId%>"
+        data-buttontext="Click here To Pay ₹<%=totalAmount%>"
+        data-name="E-Commerce"
+        data-description="E-comProduct"
+        data-image="https://jootoor.com/wp-content/uploads/2019/03/Logo-Design.jpg"
+        data-theme.color="#ff4530"
+        ></script>  
+      </form>
+  </button>
+  
   
 
 </div>
