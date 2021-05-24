@@ -18,7 +18,7 @@ const isVerified = async(req,res,next)=>{
             res.redirect("/login");   
         }
         else if(!user.is_verified){
-            req.flash("error" , "Please Verify Your Email First!. Link In email Vaid For Only 2 Minutes.")
+            req.flash("error" , "Please verify your email first!. A mail with comfirmation link has already been send to your email.")
             setTimeout(()=>{
                 User.findByIdAndRemove(user._id)},2000);
             res.redirect("/login");

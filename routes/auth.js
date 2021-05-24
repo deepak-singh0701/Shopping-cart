@@ -48,7 +48,7 @@ async function sendMail(mailOptions){
 
 
 // Get the signup form
-router.get("/register", async (req, res) => {
+router.get("/register",(req, res) => {
   res.render("auth/signup");
 });
 

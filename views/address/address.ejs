@@ -3,7 +3,7 @@
 
 <div class="container" style="max-width: 500px;">
     <h2 class="text-center"> Delivery Address</h2>
-    <form action="/payment/savedaddress" method="POST">
+    <form class="validated-form" action="/payment/savedaddress" method="POST" novalidate>
 
         <label class="form-label ">Full Name:</label>
         <input class="form-control mb-2 w-75" type="text" name="name" required>
@@ -64,7 +64,7 @@
         <label class="form-label"> House No. / Building Name:</label>
         <input class="form-control mb-2" type="text" name="hno">
         <label class="form-label">Road Name , Area , Colony:</label>
-        <textarea class="form-control mb-2" name="colony" cols="10" rows="5"></textarea>
+        <textarea class="form-control mb-2" name="colony" cols="10" rows="5" required></textarea>
         <label class="form-label">Landmark:</label>
         <input class="form-control mb-3" type="text" name="landmark">
         <input type="hidden" name="totalAmount" value="<%= totalAmount %> ">

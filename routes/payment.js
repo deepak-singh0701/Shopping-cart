@@ -85,7 +85,7 @@ router.post("/payment/success", isLoggedIn, async (req, res) => {
   let generated_signature = hmac.digest("hex");
   if (generated_signature == req.body.razorpay_signature) {
   }else{
-    req.flash("Your Payment is Not Verified Please Try Again!")
+    req.flash("Your payment is not valid!. Please try any other payment mode.")
     res.redirect("/products");
   }
   const user = req.user;
@@ -105,7 +105,7 @@ router.post("/payment/success", isLoggedIn, async (req, res) => {
     const placedOrder = await Order.create(order);
 
     req.user.orders.push(placedOrder);
-    await req.user.cart==null;
+    await User.findByIdAndUpdate(user._id , { $set: { cart: null }});
     await req.user.save();
 
     req.flash(
