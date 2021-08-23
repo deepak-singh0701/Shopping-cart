@@ -22,11 +22,12 @@ oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN});
 async function sendMail(mailOptions){
   try{
     const accessToken= await oAuth2Client.getAccessToken();
+    console.log(accessToken , CLIENT_ID , CLIENT_SECRET , REDIRECT_URI , REFRESH_TOKEN);
     const transport = nodemailer.createTransport({
       service: 'gmail',
       auth:{
         type:'OAuth2',
-        user:"deepak0701singh@gmail.com",
+        user:"deepanshu07singh@gmail.com",
         clientId:CLIENT_ID,
         clientSecret:CLIENT_SECRET,
         refreshToken:REFRESH_TOKEN,
@@ -70,8 +71,8 @@ router.post("/register", async (req, res) => {
           return res.redirect("/register");
         }
         const mailOptions = {
-          to:req.body.email,
           from:"E-commerce <deepak0709singh@gmail.com>" ,
+          to:req.body.email,
           subject:"Email Verification" ,
           text:
           `Hello , Thanks for Registering On Our Site ,
